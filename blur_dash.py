@@ -49,7 +49,7 @@ def parse_contents(contents, filename, date):
     decoded_image = base64.b64decode(encoded_image)
     bytes_image = BytesIO(decoded_image)
     #image = Image.open(bytes_image).convert('RGB')
-    image = cv2.imdecode(np.fromstring(decoded_image, np.uint8), 1)
+    image = cv2.imdecode(np.frombuffer(decoded_image, np.uint8), 1)
 
     blur_measure = cv2.Laplacian(image, cv2.CV_64F).var()
     if blur_measure < 100:
@@ -105,4 +105,4 @@ def update_output(list_of_contents, list_of_names, list_of_dates):
 
 
 if __name__ == '__main__':
-    app.run_server(debug=True)
+    app.run_server(debug=True, port=8050)
